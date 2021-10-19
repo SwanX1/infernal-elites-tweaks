@@ -1,0 +1,39 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="Apache-2.0"
+issueTrackerURL="https://github.com/SwanX1/infernal-elites-tweaks"
+
+[[mods]]
+  modId="infernalelitestweaks"
+  version="${file.jarVersion}"
+  displayName="Infernal Elites Tweaks"
+  # See: https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+  #updateJSONURL="https://change.me.example.invalid/updates.json"
+  #displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
+  #logoFile="examplemod.png"
+  credits="SwanX1"
+  authors="Infernal Studios"
+  description='''
+  This mod contains tweaks for the Infernal Elites 2 modpack!
+  '''
+
+[[dependencies.infernalelitestweaks]]
+  modId="forge"
+  mandatory=true
+  versionRange="[36,)"
+  ordering="NONE"
+  side="BOTH"
+
+[[dependencies.infernalelitestweaks]]
+  modId="minecraft"
+  mandatory=true
+  versionRange="[1.16.5,1.17)"
+  ordering="NONE"
+  side="BOTH"
+
+[[dependencies.infernalelitestweaks]]
+  modId="infernalexp"
+  mandatory=true
+  versionRange="[2.3,)"
+  ordering="NONE"
+  side="BOTH"
