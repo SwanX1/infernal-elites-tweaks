@@ -8,6 +8,7 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "common.CreeperEntityAccess",
     "common.MixinEntityDensityManager",
     "common.MixinServerChunkProvider",
     "common.WorldEntitySpawnerAccess"
