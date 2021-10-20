@@ -53,10 +53,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -173,7 +176,8 @@ public final class IETEvents {
       EntityType.ZOMBIE_VILLAGER,
       EntityType.HUSK,
       ForgeRegistries.ENTITIES.getValue(new ResourceLocation("desolation", "blackened")),
-      ForgeRegistries.ENTITIES.getValue(new ResourceLocation("eidolon", "zombie_brute"))
+      ForgeRegistries.ENTITIES.getValue(new ResourceLocation("eidolon", "zombie_brute")),
+      ForgeRegistries.ENTITIES.getValue(new ResourceLocation("eidolon", "wraith"))
     )) {
       MOB_EFFECT_LIST.put(
         entityType,
@@ -215,6 +219,28 @@ public final class IETEvents {
           }
         }
       }
+    }
+  }
+
+  @SubscribeEvent
+  public void onBiomeLoad(BiomeLoadingEvent event) {
+    if (new ResourceLocation("desolation", "charred_forest").equals(event.getName())) {
+      List<Spawners> mobSpawners = event.getSpawns().getSpawner(EntityClassification.MONSTER);
+      for (Map.Entry<EntityType<?>, ?> entry : MOB_EFFECT_LIST.entrySet()) {
+        if (entry.getKey() != null) {
+          mobSpawners.add(new MobSpawnInfo.Spawners(entry.getKey(), 1, 1, 1));
+        }
+      }
+
+      // Adding more blackened spawners, so that other mobs don't outweigh them.
+      mobSpawners.add(
+        new MobSpawnInfo.Spawners(
+          ForgeRegistries.ENTITIES.getValue(new ResourceLocation("desolation", "blackened")),
+          MOB_EFFECT_LIST.size(),
+          1,
+          1
+        )
+      );
     }
   }
   
