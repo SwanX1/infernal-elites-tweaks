@@ -61,7 +61,7 @@ public class MixinEntityDensityManager implements LevelGetter {
       if (overworldDimensionType == null) {
         this.overworldDimensionType = this.level.getServer().getLevel(World.OVERWORLD).dimensionType();
       }
-      if (this.level != null && this.level.dimensionType() == this.overworldDimensionType) {
+      if (this.level != null && this.level.dimensionType() == this.overworldDimensionType && entityClassification == EntityClassification.MONSTER) {
         double multiplier = 5;
         int i = (int) (entityClassification.getMaxInstancesPerChunk() * (this.spawnableChunkCount * multiplier) / WorldEntitySpawnerAccess.getMagicNumber());
         cir.setReturnValue(this.unmodifiableMobCategoryCounts.getInt(entityClassification) < i);
