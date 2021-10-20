@@ -32,6 +32,9 @@ import org.infernalstudios.infernalelitestweaks.mixin.common.CreeperEntityAccess
 import org.infernalstudios.infernalexp.init.IEBiomes;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -129,9 +132,14 @@ public final class IETEvents {
         }
 
         // Find a safe spawn position
-        spawnPos = IETUtil.getSpawnableBiomesPosition(nether, spawnableBiomes, spawnPos, 9999);
+        spawnPos = IETUtil.getSpawnableBiomesPosition(nether, spawnableBiomes, spawnPos, 9999).immutable();
 
         if (spawnPos != null) {
+          // Make sure there's a solid block under player.
+          Block blockBelow = nether.getBlockState(spawnPos.below()).getBlock();
+          if (blockBelow instanceof FallingBlock || blockBelow.equals(Blocks.LAVA)) {
+            nether.setBlock(spawnPos.below(), Blocks.NETHERRACK.defaultBlockState(), 2);
+          }
           // Teleport to safe spawn position
           player.teleportTo(nether, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.getViewYRot(0.0f), player.getViewXRot(0.0f));
         } else {
