@@ -27,7 +27,7 @@ jobs:
       - name: Publish to Maven
         run: ./gradlew publish
         env:
-          MAVEN_USER: ${{ secrete.MAVEN_USER }}
+          MAVEN_USER: ${{ secrets.MAVEN_USER }}
           MAVEN_TOKEN: ${{ secrets.MAVEN_TOKEN }}
 
       - name: Create GitHub Release
